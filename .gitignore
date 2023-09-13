@@ -23,8 +23,8 @@
 hs_err_pid*
 replay_pid*
 
-.DB_Store
-**/.DB_Store
+.DS_Store
+**/.DS_Store
 
 .idea/
 
