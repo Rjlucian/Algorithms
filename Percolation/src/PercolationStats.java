@@ -10,7 +10,7 @@ public class PercolationStats {
     private final double confidenceHi;
 
     public PercolationStats(int n, int trials) {
-        if (n < 0 || trials < 0) {
+        if (n <= 0 || trials <= 0) {
             throw new IllegalArgumentException("n and trails must be more than 0.");
         }
         double[] data = new double[trials];

@@ -11,7 +11,7 @@ public class Percolation {
     private static int[][] offset;
 
     public Percolation(int n) {
-        if (n < 0) {
+        if (n <= 0) {
             throw new IllegalArgumentException();
         }
         this.n = n;
