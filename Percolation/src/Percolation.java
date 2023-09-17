@@ -1,4 +1,3 @@
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -18,7 +17,7 @@ public class Percolation {
         this.n = n;
         openNum = 0;
         opened = new boolean[n * n + 2];
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n * n; i++) {
                 opened[i] = false;
             }
         opened[0] = true;
