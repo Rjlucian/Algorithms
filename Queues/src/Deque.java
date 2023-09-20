@@ -121,6 +121,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item val = cur.val;
             cur = cur.next;
             return val;

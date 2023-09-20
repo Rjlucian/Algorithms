@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
@@ -52,11 +53,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the item to be returned and removed.
      */
     public Item dequeue() {
+        if (size() == 0) {
+            throw new NoSuchElementException();
+        }
         int index = getRandomIndex();
         Item item = data[index];
-        for (int i = index; i < last - 1; i++) {
-            data[i] = data[i + 1];
-        }
+        data[index] = data[last - 1];
         data[last - 1] = null;
         last--;
         if (capacity > 8 && (double) last / capacity < 0.25) {
@@ -71,6 +73,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the item to be returned.
      */
     public Item sample() {
+        if (size() == 0) {
+            throw new NoSuchElementException();
+        }
         int index = getRandomIndex();
         return data[index];
     }
@@ -131,6 +136,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = IteratorData[cur];
             cur++;
             return item;
