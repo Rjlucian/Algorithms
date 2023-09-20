@@ -143,6 +143,7 @@ public class Deque<Item> implements Iterable<Item> {
         deque.removeFirst();
         deque.removeLast();
 
+
         StdOut.println("Size: " + deque.size());
         StdOut.print("All the elements: ");
         for (var e : deque) {
@@ -163,7 +164,7 @@ public class Deque<Item> implements Iterable<Item> {
         for (var e : deque) {
             StdOut.print(e + " ");
         }
-        StdOut.println();
+        StdOut.println(deque.isEmpty());
 
     }
 
