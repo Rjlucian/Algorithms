@@ -17,7 +17,11 @@ public class FastCollinearPoints {
         validatePointsNotEqual(points);
 
         int len = points.length;
+
+
+        // This prohibits changing the content in the points.
         points = Arrays.copyOf(points, len);
+
         Point[] temp = Arrays.copyOf(points, len);
 
         for (Point point : points) {
@@ -41,27 +45,38 @@ public class FastCollinearPoints {
 
     private void findSequence(Point[] points, Point curPoint) {
         int len = points.length;
-        for (int i = 1; i < len;) {
-            int j = i + 1;
-            while (j < len && curPoint.slopeTo(points[i]) == curPoint.slopeTo(points[j])) {
-                j++;
+        for (int left = 1; left < len;) {
+            int right = left + 1;
+            while (right < len && curPoint.slopeTo(points[left]) == curPoint.slopeTo(points[right])) {
+                right++;
             }
-            if (j - i >= 3 && curPoint.compareTo(min(points, i, j - 1)) < 0) {
-                segments.add(new LineSegment(curPoint, max(points, i, j - 1)));
+            if (right - left >= 3 && curPoint.compareTo(min(points, left, right - 1)) < 0) {
+                // (right - left) >= 3: When exit from the loop, points[index] is not
+                // a slope to curPoint differing with previous points. So right - 1 + left + 1) + 1 >= 4
+                // equals to (right - left) >= 3, the 1 outside the scoop brackets means curPoint itself.
+
+                // Second condition makes sure that a new LineSegment will be added if and only if
+                // the curPoint is located at the left down of the start point of the LineSegment.
+                // It also means every lineSegments will only be added once.
+
+                // From the Second condition, We know curPoint is the start point.
+                // We need to find the end point of the LineSegment.
+                // This avoids we add any subsegments.
+                segments.add(new LineSegment(curPoint, max(points, left, right - 1)));
             }
-            if (j == len) {
+            if (right == len) {
                 break;
             }
-            i = j;
+            left = right;
         }
     }
 
-    private Point min(Point[] a, int lo, int hi) {
-        if (lo > hi || a == null) {
+    private Point min(Point[] a, int low, int high) {
+        if (low > high || a == null) {
             throw new IllegalArgumentException();
         }
-        Point ret = a[lo];
-        for (int i = lo + 1; i <= hi; i++) {
+        Point ret = a[low];
+        for (int i = low + 1; i <= high; i++) {
             if (ret.compareTo(a[i]) > 0) {
                 ret = a[i];
             }
@@ -69,12 +84,12 @@ public class FastCollinearPoints {
         return ret;
     }
 
-    private Point max(Point[] a, int lo, int hi) {
-        if (lo > hi || a == null) {
+    private Point max(Point[] a, int low, int high) {
+        if (low > high || a == null) {
             throw new IllegalArgumentException();
         }
-        Point ret = a[lo];
-        for (int i = lo + 1; i <= hi; i++) {
+        Point ret = a[low];
+        for (int i = low + 1; i <= high; i++) {
             if (ret.compareTo(a[i]) < 0) {
                 ret = a[i];
             }

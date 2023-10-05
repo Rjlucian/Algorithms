@@ -18,7 +18,10 @@ public class BruteCollinearPoints {
         validatePointsNotNull(points);
         validateSinglePointNotNull(points);
         validatePointsNotEqual(points);
+
+        // preventing changing content in the points.
         points = Arrays.copyOf(points, points.length);
+
         Arrays.sort(points);
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
@@ -36,10 +39,16 @@ public class BruteCollinearPoints {
         }
     }
 
+    /**
+     the number of line segments
+     */
     public int numberOfSegments() {
         return segments.size();
     }
 
+    /**
+     * @return The line segments.
+     */
     public LineSegment[] segments() {
         LineSegment[] ret = new LineSegment[numberOfSegments()];
         int i = 0;
@@ -49,6 +58,10 @@ public class BruteCollinearPoints {
         return ret;
     }
 
+
+    /**
+     * Test if an array of point is null.
+     */
     private void validatePointsNotNull(Point[] points) {
         if (points == null) {
             String msg = "points is null";
@@ -56,6 +69,9 @@ public class BruteCollinearPoints {
         }
     }
 
+    /**
+     * Test if there is a null object in an array of Point.
+     */
     private void validateSinglePointNotNull(Point[] points) {
         int i = 0;
         for (Point point : points) {
@@ -66,6 +82,9 @@ public class BruteCollinearPoints {
         }
     }
 
+    /**
+     * Test if there are duplicate points in an array of point.
+     */
     private void validatePointsNotEqual(Point[] points) {
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
