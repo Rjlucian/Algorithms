@@ -85,17 +85,18 @@ public class Solver {
         private final int moves;
         private final Board board;
         private final SearchNode pre;
+        private final int priority;
 
         public SearchNode(int moves, Board board, SearchNode pre) {
             this.moves = moves;
             this.board = board;
             this.pre = pre;
+            this.priority = moves + board.manhattan();
         }
 
         @Override
         public int compareTo(SearchNode that) {
-            return (this.moves + this.board.manhattan() - (that.moves + that.board.manhattan()));
-
+            return this.priority - that.priority;
         }
     }
 
